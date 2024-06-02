@@ -1,0 +1,28 @@
+apiVersion: platform.confluent.io/v1beta1
+kind: KsqlDB
+metadata:
+  name: ksqldb
+  namespace: {{ .Release.Namespace }}
+spec:
+  replicas: {{ .Values.replicas.ksqldb }}
+  image:
+    application: {{ .Values.images.ksqldb }}
+    init: {{ .Values.images.init }}
+  dataVolumeCapacity: {{ .Values.volumes.ksqldb.data }}
+  internalTopicReplicationFactor: 1
+  dependencies:
+    schemaRegistry:
+      url: {{ .Values.dependencies.ksqldb.schemaRegistry }}
+  podTemplate:
+    resources:
+      requests:
+        cpu: {{ .Values.resources.ksqldb.requests.cpu }}
+        memory: {{ .Values.resources.ksqldb.requests.memory }}
+      limits:
+        cpu: {{ .Values.resources.ksqldb.limits.cpu }}
+        memory: {{ .Values.resources.ksqldb.limits.memory }}
+    probe:
+      liveness:
+        periodSeconds: {{ .Values.probes.liveness.periodSeconds }}
+        failureThreshold: {{ .Values.probes.liveness.failureThreshold }}
+        timeoutSeconds: {{ .Values.probes.liveness.timeoutSeconds }}

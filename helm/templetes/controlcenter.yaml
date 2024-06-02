@@ -1,0 +1,39 @@
+apiVersion: platform.confluent.io/v1beta1
+kind: ControlCenter
+metadata:
+  name: controlcenter
+  namespace: {{ .Release.Namespace }}
+spec:
+  replicas: {{ .Values.replicas.controlcenter }}
+  image:
+    application: {{ .Values.images.controlcenter }}
+    init: {{ .Values.images.init }}
+  dataVolumeCapacity: {{ .Values.volumes.controlcenter.data }}
+  configOverrides:
+    server: {{ .Values.configOverrides.controlcenter.server | toYaml | indent 6 }}
+  podTemplate:
+    resources:
+      requests:
+        cpu: {{ .Values.resources.controlcenter.requests.cpu }}
+        memory: {{ .Values.resources.controlcenter.requests.memory }}
+      limits:
+        cpu: {{ .Values.resources.controlcenter.limits.cpu }}
+        memory: {{ .Values.resources.controlcenter.limits.memory }}
+    probe:
+      liveness:
+        periodSeconds: {{ .Values.probes.liveness.periodSeconds }}
+        failureThreshold: {{ .Values.probes.liveness.failureThreshold }}
+        timeoutSeconds: {{ .Values.probes.liveness.timeoutSeconds }}
+  dependencies:
+    schemaRegistry:
+      url: {{ .Values.dependencies.controlcenter.schemaRegistry }}
+    ksqldb:
+      {{- range .Values.dependencies.controlcenter.ksqldb }}
+      - name: {{ .name }}
+        url: {{ .url }}
+      {{- end }}
+    connect:
+      {{- range .Values.dependencies.controlcenter.connect }}
+      - name: {{ .name }}
+        url: {{ .url }}
+      {{- end }}

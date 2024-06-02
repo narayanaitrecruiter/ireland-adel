@@ -1,0 +1,18 @@
+apiVersion: platform.confluent.io/v1beta1
+kind: SchemaRegistry
+metadata:
+  name: schemaregistry
+  namespace: {{ .Release.Namespace }}
+spec:
+  replicas: {{ .Values.replicas.schemaregistry }}
+  image:
+    application: {{ .Values.images.schemaregistry }}
+    init: {{ .Values.images.init }}
+  podTemplate:
+    resources:
+      requests:
+        cpu: {{ .Values.resources.schemaregistry.requests.cpu }}
+        memory: {{ .Values.resources.schemaregistry.requests.memory }}
+      limits:
+        cpu: {{ .Values.resources.schemaregistry.limits.cpu }}
+        memory: {{ .Values.resources.schemaregistry.limits.memory }}

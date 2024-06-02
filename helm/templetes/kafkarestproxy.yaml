@@ -1,0 +1,21 @@
+apiVersion: platform.confluent.io/v1beta1
+kind: KafkaRestProxy
+metadata:
+  name: kafkarestproxy
+  namespace: {{ .Release.Namespace }}
+spec:
+  replicas: {{ .Values.replicas.kafkarestproxy }}
+  image:
+    application: {{ .Values.images.kafkarestproxy }}
+    init: {{ .Values.images.init }}
+  dependencies:
+    schemaRegistry:
+      url: {{ .Values.dependencies.kafkarestproxy.schemaRegistry }}
+  podTemplate:
+    resources:
+      requests:
+        cpu: {{ .Values.resources.kafkarestproxy.requests.cpu }}
+        memory: {{ .Values.resources.kafkarestproxy.requests.memory }}
+      limits:
+        cpu: {{ .Values.resources.kafkarestproxy.limits.cpu }}
+        memory: {{ .Values.resources.kafkarestproxy.limits.memory }}

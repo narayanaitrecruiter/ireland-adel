@@ -1,0 +1,25 @@
+apiVersion: platform.confluent.io/v1beta1
+kind: Connect
+metadata:
+  name: connect
+  namespace: {{ .Release.Namespace }}
+spec:
+  replicas: {{ .Values.replicas.connect }}
+  image:
+    application: {{ .Values.images.connect }}
+    init: {{ .Values.images.init }}
+  configOverrides:
+    server: {{ .Values.configOverrides.connect.server | toYaml | indent 6 }}
+  podTemplate:
+    resources:
+      requests:
+        cpu: {{ .Values.resources.connect.requests.cpu }}
+        memory: {{ .Values.resources.connect.requests.memory }}
+      limits:
+        cpu: {{ .Values.resources.connect.limits.cpu }}
+        memory: {{ .Values.resources.connect.limits.memory }}
+    probe:
+      liveness:
+        periodSeconds: {{ .Values.probes.liveness.periodSeconds }}
+        failureThreshold: {{ .Values.probes.liveness.failureThreshold }}
+        timeoutSeconds: {{ .Values.probes.liveness.timeoutSeconds }}

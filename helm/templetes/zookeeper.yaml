@@ -1,0 +1,22 @@
+apiVersion: platform.confluent.io/v1beta1
+kind: Zookeeper
+metadata:
+  name: zookeeper
+  namespace: {{ .Release.Namespace }}
+spec:
+  replicas: {{ .Values.replicas.zookeeper }}
+  image:
+    application: {{ .Values.images.zookeeper }}
+    init: {{ .Values.images.init }}
+  dataVolumeCapacity: {{ .Values.volumes.zookeeper.data }}
+  logVolumeCapacity: {{ .Values.volumes.zookeeper.log }}
+  podTemplate:
+    resources:
+      requests:
+        cpu: {{ .Values.resources.zookeeper.requests.cpu }}
+        memory: {{ .Values.resources.zookeeper.requests.memory }}
+      limits:
+        cpu: {{ .Values.resources.zookeeper.limits.cpu }}
+        memory: {{ .Values.resources.zookeeper.limits.memory }}
+  accessModes:
+    - ReadWriteOnce

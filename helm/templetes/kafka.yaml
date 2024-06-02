@@ -1,0 +1,24 @@
+apiVersion: platform.confluent.io/v1beta1
+kind: Kafka
+metadata:
+  name: kafka
+  namespace: {{ .Release.Namespace }}
+spec:
+  replicas: {{ .Values.replicas.kafka }}
+  image:
+    application: {{ .Values.images.kafka }}
+    init: {{ .Values.images.init }}
+  dataVolumeCapacity: {{ .Values.volumes.kafka.data }}
+  logVolumeCapacity: {{ .Values.volumes.kafka.log }}
+  configOverrides:
+    server: {{ .Values.configOverrides.kafka.server | toYaml | indent 6 }}
+  podTemplate:
+    resources:
+      requests:
+        cpu: {{ .Values.resources.kafka.requests.cpu }}
+        memory: {{ .Values.resources.kafka.requests.memory }}
+      limits:
+        cpu: {{ .Values.resources.kafka.limits.cpu }}
+        memory: {{ .Values.resources.kafka.limits.memory }}
+  metricReporter:
+    enabled: true

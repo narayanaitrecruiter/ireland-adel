@@ -1,0 +1,18 @@
+apiVersion: platform.confluent.io/v1beta1
+kind: KafkaRestClass
+metadata:
+  name: krc-cfk
+  namespace: {{ .Release.Namespace }}
+spec:
+  kafkaClusterRef:
+    name: {{ .Values.dependencies.kafkarestclass.kafkaClusterRef }}
+  kafkaRest:
+    endpoint: {{ .Values.dependencies.kafkarestclass.kafkaRestEndpoint }}
+  podTemplate:
+    resources:
+      requests:
+        cpu: {{ .Values.resources.kafkarestclass.requests.cpu }}
+        memory: {{ .Values.resources.kafkarestclass.requests.memory }}
+      limits:
+        cpu: {{ .Values.resources.kafkarestclass.limits.cpu }}
+        memory: {{ .Values.resources.kafkarestclass.limits.memory }}
