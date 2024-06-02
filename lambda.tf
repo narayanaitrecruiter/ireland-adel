@@ -86,3 +86,13 @@ resource "aws_lambda_permission" "qa_permission" {
 
   source_arn = "${aws_api_gateway_rest_api.qa_gw.execution_arn}/*/*"
 }
+
+# Create CloudWatch log group
+resource "aws_cloudwatch_log_group" "lambda_log_group" {
+  name = "/aws/lambda/${aws_lambda_function.qa_function.function_name}"
+  retention_in_days = 7
+  tags = {
+        Environment = "QA"
+        Project     = "Lambda logs"
+    }
+}

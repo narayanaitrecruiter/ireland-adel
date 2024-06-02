@@ -72,3 +72,13 @@ resource "aws_iam_role" "rds_access_role_postgres" {
 EOF
 }
 
+
+# CloudWatch Log Group
+resource "aws_cloudwatch_log_group" "postgres_log_group" {
+  name              = "/aws/rds/qa-postgres-rds"
+  retention_in_days = 30
+  tags = {
+        Environment = "QA"
+        Project     = "qa-postgres-rds"
+    }
+}

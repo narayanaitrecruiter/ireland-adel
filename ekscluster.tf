@@ -1,16 +1,16 @@
 
 
-# data "aws_ami" "eks_worker" {
-#   filter {
-#     name   = "name"
-#     values = ["amazon-eks-node-1.21-v*"]
-#   }
+resource "aws_cloudwatch_log_group" "eks_logs" {
+  name = "/aws/eks/qa-eks"
+  retention_in_days = 30
 
-#   most_recent = true
-#   owners      = ["111111111111"] # Amazon EKS AMI account ID
-# }
+  tags = {
+        Environment = "QA"
+        Project     = "Eks cluster"
+    }
+}
 
-# Create IAM role for EKS
+
 resource "aws_iam_role" "eks" {
   name = "eks"
 

@@ -1,12 +1,14 @@
 
 
-# Retrieve the VPC and Subnet IDs
-# data "terraform_remote_state" "vpc" {
-#   backend = "local"
-#   config = {
-#     path = "path/to/vpc/terraform/state/file"
-#   }
-# }
+# CloudWatch Log Group
+resource "aws_cloudwatch_log_group" "aurora_log_group" {
+  name              = "/aws/rds/cluster/${aws_rds_cluster.qa_postgres.id}/error"
+  retention_in_days = 30
+  tags = {
+        Environment = "QA"
+        Project     = "Aurora server"
+    }
+}
 
 # RDS Security Group
 resource "aws_security_group" "rds_security_group_aurora" {

@@ -48,3 +48,21 @@ resource "aws_security_group" "alb_security_group" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 }
+
+resource "aws_cloudwatch_log_group" "lb_log_group01" {
+  name = "/aws/alb/${aws_lb.qa_load_balancer01.name}"
+  retention_in_days = 7
+  tags = {
+        Environment = "QA"
+        Project     = "qa_load_balancer01"
+    }
+}
+
+resource "aws_cloudwatch_log_group" "lb_log_group02" {
+  name = "/aws/alb/${aws_lb.qq_load_balancer02.name}"
+  retention_in_days = 7
+  tags = {
+        Environment = "QA"
+        Project     = "qq_load_balancer02"
+    }
+}

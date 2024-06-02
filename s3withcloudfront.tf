@@ -127,7 +127,18 @@ resource "aws_cloudfront_distribution" "cf01" {
 
 resource "aws_cloudfront_origin_access_identity" "oai" {
   comment = "My CloudFront OAI"
+  
 }
+
+resource "aws_cloudwatch_log_group" "log_group01" {
+  name              = "/aws/cloudfront/cf01"
+  retention_in_days = 30
+  tags = {
+        Environment = "QA"
+        Project     = "qa_cloudfront1"
+    }
+}
+
 
 # resource "aws_cloudfront_distribution" "cf02" {
 #   # Similar configuration as CF01
