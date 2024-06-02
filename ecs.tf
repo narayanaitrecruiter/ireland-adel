@@ -29,21 +29,24 @@ resource "aws_ecs_task_definition" "auth" {
   memory                   = 512
   network_mode             = "bridge"
 
-  container_definitions = <<DEFINITION
-[
-  {
-    "name": "auth",
-    "image": "your-auth-image:latest",
-    "essential": true,
-    "portMappings": [
-      {
-        "containerPort": 80,
-        "hostPort": 80
-      }
-    ]
-  }
-]
-DEFINITION
+  container_definitions = file("${path.module}/auth-task-definition/auth-task-definition.json")
+
+
+#   container_definitions = <<DEFINITION
+# [
+#   {
+#     "name": "auth",
+#     "image": "your-auth-image:latest",
+#     "essential": true,
+#     "portMappings": [
+#       {
+#         "containerPort": 80,
+#         "hostPort": 80
+#       }
+#     ]
+#   }
+# ]
+# DEFINITION
 
   lifecycle {
     create_before_destroy = true

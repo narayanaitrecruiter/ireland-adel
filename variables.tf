@@ -15,3 +15,46 @@ variable "availability_zones" {
 variable "vpc_name" {
   default = "non-prod"
 }
+
+
+variable "cluster_name" {
+  description = "The name of the EKS cluster"
+  type        = string
+  default     = "qa-eks"
+}
+
+variable "region" {
+  description = "The AWS region"
+  type        = string
+  default     = "us-west-2"
+}
+
+variable "node_instance_type" {
+  description = "EC2 instance type for the EKS nodes"
+  type        = string
+  default     = "m5.large"
+}
+
+variable "desired_capacity" {
+  description = "Desired number of worker nodes"
+  type        = number
+  default     = 2
+}
+
+variable "max_size" {
+  description = "Maximum number of worker nodes"
+  type        = number
+  default     = 15
+}
+
+variable "min_size" {
+  description = "Minimum number of worker nodes"
+  type        = number
+  default     = 2
+}
+
+variable "namespace" {
+  description = "Namespace to be created in the EKS cluster"
+  type        = string
+  default     = "app-ns"
+}
