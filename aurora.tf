@@ -37,8 +37,8 @@ resource "aws_rds_cluster" "qa_postgres" {
   engine_version          = "11.10"
   availability_zones      = var.availability_zones
   database_name           = "qa_postgres"
-  master_username         = "admin"
-  master_password         = "hgtrewyfshas"
+  master_username         = var.aurorausername
+  master_password         = var.aurorapassword
   backup_retention_period = 1
   preferred_backup_window = "00:00-01:00"
   vpc_security_group_ids   = [aws_security_group.rds_security_group_aurora.id]

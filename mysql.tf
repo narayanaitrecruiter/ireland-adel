@@ -27,8 +27,8 @@ resource "aws_db_instance" "qa_mysql" {
   allocated_storage   = 30
   storage_type         = "gp2"
   db_name             = "qa_mysql"
-  username            = "admin"
-  password            = "hgtrewyfshas"
+  username            = "var.mysqlusername"
+  password            = "var.mysqlpassword"
   vpc_security_group_ids = [aws_security_group.rds_security_group_mysql.id]
   db_subnet_group_name = aws_db_subnet_group.qa_mysql_subnet_group.name
   backup_retention_period = 1

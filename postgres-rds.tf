@@ -32,8 +32,8 @@ resource "aws_db_instance" "qa_postgres_rds" {
   allocated_storage   = 30
   storage_type         = "gp2"
   db_name             = "qa_postgres"
-  username            = "admin"
-  password            = "hgtrewyfshas"
+  username            = "var.postgresusername"
+  password            = "var.postgrespassword"
   vpc_security_group_ids = [aws_security_group.rds_security_group_postgres.id]
   db_subnet_group_name = aws_db_subnet_group.qa_postgres_subnet_group.name
   backup_retention_period = 1
